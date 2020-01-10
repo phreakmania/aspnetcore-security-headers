@@ -6,7 +6,6 @@ using Joonasw.AspNetCore.SecurityHeaders.FeaturePolicy;
 using Joonasw.AspNetCore.SecurityHeaders.FeaturePolicy.Builder;
 using Joonasw.AspNetCore.SecurityHeaders.Hpkp;
 using Joonasw.AspNetCore.SecurityHeaders.Hpkp.Builder;
-using Joonasw.AspNetCore.SecurityHeaders.Hsts;
 using Joonasw.AspNetCore.SecurityHeaders.ReferrerPolicy;
 using Joonasw.AspNetCore.SecurityHeaders.XContentTypeOptions;
 using Joonasw.AspNetCore.SecurityHeaders.XFrameOptions;
@@ -29,7 +28,7 @@ namespace Joonasw.AspNetCore.SecurityHeaders
         /// <param name="app">The <see cref="IApplicationBuilder"/></param>
         /// <param name="builderAction">Configuration action for the header.</param>
         /// <returns>The <see cref="IApplicationBuilder"/></returns>
-        public static IApplicationBuilder UseJoonaswCsp(this IApplicationBuilder app, Action<CspBuilder> builderAction)
+        public static IApplicationBuilder UseCsp(this IApplicationBuilder app, Action<CspBuilder> builderAction)
         {
             var builder = new CspBuilder();
             builderAction(builder);
@@ -45,34 +44,9 @@ namespace Joonasw.AspNetCore.SecurityHeaders
         /// </summary>
         /// <param name="app">The <see cref="IApplicationBuilder"/></param>
         /// <returns>The <see cref="IApplicationBuilder"/></returns>
-        public static IApplicationBuilder UseJoonaswCsp(this IApplicationBuilder app)
+        public static IApplicationBuilder UseCsp(this IApplicationBuilder app)
         {
             return app.UseMiddleware<CspMiddleware>();
-        }
-
-        /// <summary>
-        /// Adds a HTTP Strict Transport Security header
-        /// to the response.
-        /// </summary>
-        /// <param name="app">The <see cref="IApplicationBuilder"/></param>
-        /// <param name="options"></param>
-        /// <returns>The <see cref="IApplicationBuilder"/></returns>
-        public static IApplicationBuilder UseJoonaswHsts(
-            this IApplicationBuilder app,
-            HstsOptions options)
-        {
-            return app.UseMiddleware<HstsMiddleware>(new OptionsWrapper<HstsOptions>(options));
-        }
-
-        /// <summary>
-        /// Adds a HTTP Strict Transport Security header
-        /// to the response.
-        /// </summary>
-        /// <param name="app">The <see cref="IApplicationBuilder"/></param>
-        /// <returns>The <see cref="IApplicationBuilder"/></returns>
-        public static IApplicationBuilder UseJoonaswHsts(this IApplicationBuilder app)
-        {
-            return app.UseMiddleware<HstsMiddleware>();
         }
 
         /// <summary>
@@ -82,7 +56,7 @@ namespace Joonasw.AspNetCore.SecurityHeaders
         /// <param name="app">The <see cref="IApplicationBuilder"/></param>
         /// <param name="builderAction">Configuration action for the header.</param>
         /// <returns>The <see cref="IApplicationBuilder"/></returns>
-        public static IApplicationBuilder UseJoonaswHpkp(
+        public static IApplicationBuilder UseHpkp(
             this IApplicationBuilder app,
             Action<HpkpBuilder> builderAction)
         {
@@ -98,7 +72,7 @@ namespace Joonasw.AspNetCore.SecurityHeaders
         /// </summary>
         /// <param name="app">The <see cref="IApplicationBuilder"/></param>
         /// <returns>The <see cref="IApplicationBuilder"/></returns>
-        public static IApplicationBuilder UseJoonaswHpkp(this IApplicationBuilder app)
+        public static IApplicationBuilder UseHpkp(this IApplicationBuilder app)
         {
             return app.UseMiddleware<HpkpMiddleware>();
         }
@@ -108,7 +82,7 @@ namespace Joonasw.AspNetCore.SecurityHeaders
         /// </summary>
         /// <param name="app">The <see cref="IApplicationBuilder"/></param>
         /// <returns></returns>
-        public static IApplicationBuilder UseJoonaswXFrameOptions(this IApplicationBuilder app)
+        public static IApplicationBuilder UseXFrameOptions(this IApplicationBuilder app)
         {
             return app.UseMiddleware<XFrameOptionsMiddleware>();
         }
@@ -119,7 +93,7 @@ namespace Joonasw.AspNetCore.SecurityHeaders
         /// <param name="app">The <see cref="IApplicationBuilder"/></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public static IApplicationBuilder UseJoonaswXFrameOptions(
+        public static IApplicationBuilder UseXFrameOptions(
             this IApplicationBuilder app,
             XFrameOptionsOptions options)
         {
@@ -131,7 +105,7 @@ namespace Joonasw.AspNetCore.SecurityHeaders
         /// </summary>
         /// <param name="app">The <see cref="IApplicationBuilder"/></param>
         /// <returns></returns>
-        public static IApplicationBuilder UseJoonaswXXssProtection(this IApplicationBuilder app)
+        public static IApplicationBuilder UseXXssProtection(this IApplicationBuilder app)
         {
             return app.UseMiddleware<XXssProtectionMiddleware>();
         }
@@ -142,7 +116,7 @@ namespace Joonasw.AspNetCore.SecurityHeaders
         /// <param name="app">The <see cref="IApplicationBuilder"/></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public static IApplicationBuilder UseJoonaswXXssProtection(
+        public static IApplicationBuilder UseXXssProtection(
             this IApplicationBuilder app,
             XXssProtectionOptions options)
         {
@@ -154,7 +128,7 @@ namespace Joonasw.AspNetCore.SecurityHeaders
         /// </summary>
         /// <param name="app">The <see cref="IApplicationBuilder"/></param>
         /// <returns></returns>
-        public static IApplicationBuilder UseJoonaswXContentTypeOptions(this IApplicationBuilder app)
+        public static IApplicationBuilder UseXContentTypeOptions(this IApplicationBuilder app)
         {
             return app.UseMiddleware<XContentTypeOptionsMiddleware>();
         }
@@ -165,7 +139,7 @@ namespace Joonasw.AspNetCore.SecurityHeaders
         /// <param name="app">The <see cref="IApplicationBuilder"/></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public static IApplicationBuilder UseJoonaswXContentTypeOptions(
+        public static IApplicationBuilder UseXContentTypeOptions(
             this IApplicationBuilder app,
             XContentTypeOptionsOptions options)
         {
@@ -177,7 +151,7 @@ namespace Joonasw.AspNetCore.SecurityHeaders
         /// </summary>
         /// <param name="app">The <see cref="IApplicationBuilder"/></param>
         /// <returns></returns>
-        public static IApplicationBuilder UseJoonaswReferrerPolicy(this IApplicationBuilder app)
+        public static IApplicationBuilder UseReferrerPolicy(this IApplicationBuilder app)
         {
             return app.UseMiddleware<ReferrerPolicyMiddleware>();
         }
@@ -188,7 +162,7 @@ namespace Joonasw.AspNetCore.SecurityHeaders
         /// <param name="app">The <see cref="IApplicationBuilder"/></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public static IApplicationBuilder UseJoonaswReferrerPolicy(
+        public static IApplicationBuilder UseReferrerPolicy(
             this IApplicationBuilder app,
             ReferrerPolicyOptions options)
         {
@@ -202,7 +176,7 @@ namespace Joonasw.AspNetCore.SecurityHeaders
         /// <param name="app">The <see cref="IApplicationBuilder"/></param>
         /// <param name="builderAction">Configuration action for the header.</param>
         /// <returns>The <see cref="IApplicationBuilder"/></returns>
-        public static IApplicationBuilder UseJoonaswFeaturePolicy(this IApplicationBuilder app, Action<FeaturePolicyBuilder> builderAction)
+        public static IApplicationBuilder UseFeaturePolicy(this IApplicationBuilder app, Action<FeaturePolicyBuilder> builderAction)
         {
             var builder = new FeaturePolicyBuilder();
             builderAction(builder);
@@ -218,7 +192,7 @@ namespace Joonasw.AspNetCore.SecurityHeaders
         /// </summary>
         /// <param name="app">The <see cref="IApplicationBuilder"/></param>
         /// <returns>The <see cref="IApplicationBuilder"/></returns>
-        public static IApplicationBuilder UseJoonaswFeaturePolicy(this IApplicationBuilder app)
+        public static IApplicationBuilder UseFeaturePolicy(this IApplicationBuilder app)
         {
             return app.UseMiddleware<FeaturePolicyMiddleware>();
         }
@@ -229,7 +203,7 @@ namespace Joonasw.AspNetCore.SecurityHeaders
         /// <param name="app">The <see cref="IApplicationBuilder"/></param>
         /// <param name="options"></param>
         /// <returns>The <see cref="IApplicationBuilder"/></returns>
-        public static IApplicationBuilder UseJoonaswExpectCT(
+        public static IApplicationBuilder UseExpectCT(
             this IApplicationBuilder app,
             ExpectCTOptions options)
         {
@@ -241,7 +215,7 @@ namespace Joonasw.AspNetCore.SecurityHeaders
         /// </summary>
         /// <param name="app">The <see cref="IApplicationBuilder"/></param>
         /// <returns>The <see cref="IApplicationBuilder"/></returns>
-        public static IApplicationBuilder UseJoonaswExpectCT(this IApplicationBuilder app)
+        public static IApplicationBuilder UseExpectCT(this IApplicationBuilder app)
         {
             return app.UseMiddleware<ExpectCTMiddleware>();
         }

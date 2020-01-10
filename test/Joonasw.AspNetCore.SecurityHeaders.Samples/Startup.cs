@@ -21,7 +21,6 @@ namespace Joonasw.AspNetCore.SecurityHeaders.Samples
         public void ConfigureServices(IServiceCollection services)
         {
             // Setup mapping from config file to configuration
-            services.Configure<HstsOptions>(Configuration.GetSection("Hsts"));
             services.Configure<CspOptions>(Configuration.GetSection("Csp"));
             services.Configure<HpkpOptions>(Configuration.GetSection("Hpkp"));
             services.Configure<FeaturePolicyOptions>(Configuration.GetSection("FeaturePolicy"));
@@ -30,7 +29,7 @@ namespace Joonasw.AspNetCore.SecurityHeaders.Samples
             services.AddControllersWithViews();
 
             // Add CSP nonce support
-            services.AddJoonaswCsp(nonceByteAmount: 32);
+            services.AddCsp(nonceByteAmount: 32);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
@@ -43,13 +42,9 @@ namespace Joonasw.AspNetCore.SecurityHeaders.Samples
             {
                 app.UseHttpsEnforcement();
 
-                app.UseJoonaswHsts();
+                app.UseHpkp();
                 // Manual configuration
-                //app.UseJoonaswHsts(new HstsOptions(TimeSpan.FromDays(30), includeSubDomains: false, preload: false));
-
-                app.UseJoonaswHpkp();
-                // Manual configuration
-                //app.UseJoonaswHpkp(hpkp =>
+                //app.UseHpkp(hpkp =>
                 //{
                 //    hpkp.UseMaxAgeSeconds(30 * 24 * 60 * 60)
                 //        .AddSha256Pin("nrmpk4ZI3wbRBmUZIT5aKAgP0LlKHRgfA2Snjzeg9iY=")
@@ -60,9 +55,9 @@ namespace Joonasw.AspNetCore.SecurityHeaders.Samples
 
             app.UseStaticFiles();
 
-            app.UseJoonaswCsp();
+            app.UseCsp();
             // Manual configuration
-            //app.UseJoonaswCsp(csp =>
+            //app.UseCsp(csp =>
             //{
             //    //csp.EnableSandbox()
             //    //    .AllowScripts();
@@ -119,31 +114,31 @@ namespace Joonasw.AspNetCore.SecurityHeaders.Samples
             //    };
             //});
 
-            app.UseJoonaswXFrameOptions();
+            app.UseXFrameOptions();
             // Manual Configuration
-            //app.UseJoonaswXFrameOptions(new XFrameOptionsOptions(XFrameOptionsOptions.XFrameOptionsValues.Deny));
+            //app.UseXFrameOptions(new XFrameOptionsOptions(XFrameOptionsOptions.XFrameOptionsValues.Deny));
 
-            app.UseJoonaswXXssProtection();
+            app.UseXXssProtection();
             // Manual Configuration
-            //app.UseJoonaswXXssProtection(new XXssProtectionOptions(false, false));
+            //app.UseXXssProtection(new XXssProtectionOptions(false, false));
 
-            app.UseJoonaswXContentTypeOptions();
+            app.UseXContentTypeOptions();
             // Manual Configuration
-            //app.UseJoonaswXContentTypeOptions(new XContentTypeOptionsOptions(true));
+            //app.UseXContentTypeOptions(new XContentTypeOptionsOptions(true));
 
-            app.UseJoonaswReferrerPolicy();
+            app.UseReferrerPolicy();
             // Manual Configuration
-            //app.UseJoonaswReferrerPolicy(
+            //app.UseReferrerPolicy(
             //    new ReferrerPolicyOptions(ReferrerPolicyOptions.ReferrerPolicyValues.NoReferrerWhenDowngrade));
 
-            app.UseJoonaswExpectCT();
+            app.UseExpectCT();
             // Manual Configuration
-            //app.UseJoonaswExpectCT(
+            //app.UseExpectCT(
             //    new ExpectCTOptions(TimeSpan.FromSeconds(30), "/expect-ct-report", true));
 
-            app.UseJoonaswFeaturePolicy();
+            app.UseFeaturePolicy();
             // Inline configuration
-            //app.UseJoonaswFeaturePolicy(fp =>
+            //app.UseFeaturePolicy(fp =>
             //{
             //    fp.AllowGeolocation
             //        .FromSelf()
