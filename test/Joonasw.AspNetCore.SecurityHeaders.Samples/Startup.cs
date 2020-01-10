@@ -30,7 +30,7 @@ namespace Joonasw.AspNetCore.SecurityHeaders.Samples
             services.AddControllersWithViews();
 
             // Add CSP nonce support
-            services.AddCsp(nonceByteAmount: 32);
+            services.AddJoonaswCsp(nonceByteAmount: 32);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
@@ -43,13 +43,13 @@ namespace Joonasw.AspNetCore.SecurityHeaders.Samples
             {
                 app.UseHttpsEnforcement();
 
-                app.UseHsts();
+                app.UseJoonaswHsts();
                 // Manual configuration
-                //app.UseHsts(new HstsOptions(TimeSpan.FromDays(30), includeSubDomains: false, preload: false));
+                //app.UseJoonaswHsts(new HstsOptions(TimeSpan.FromDays(30), includeSubDomains: false, preload: false));
 
-                app.UseHpkp();
+                app.UseJoonaswHpkp();
                 // Manual configuration
-                //app.UseHpkp(hpkp =>
+                //app.UseJoonaswHpkp(hpkp =>
                 //{
                 //    hpkp.UseMaxAgeSeconds(30 * 24 * 60 * 60)
                 //        .AddSha256Pin("nrmpk4ZI3wbRBmUZIT5aKAgP0LlKHRgfA2Snjzeg9iY=")
@@ -60,9 +60,9 @@ namespace Joonasw.AspNetCore.SecurityHeaders.Samples
 
             app.UseStaticFiles();
 
-            app.UseCsp();
+            app.UseJoonaswCsp();
             // Manual configuration
-            //app.UseCsp(csp =>
+            //app.UseJoonaswCsp(csp =>
             //{
             //    //csp.EnableSandbox()
             //    //    .AllowScripts();
@@ -119,31 +119,31 @@ namespace Joonasw.AspNetCore.SecurityHeaders.Samples
             //    };
             //});
 
-            app.UseXFrameOptions();
+            app.UseJoonaswXFrameOptions();
             // Manual Configuration
-            //app.UseXFrameOptions(new XFrameOptionsOptions(XFrameOptionsOptions.XFrameOptionsValues.Deny));
+            //app.UseJoonaswXFrameOptions(new XFrameOptionsOptions(XFrameOptionsOptions.XFrameOptionsValues.Deny));
 
-            app.UseXXssProtection();
+            app.UseJoonaswXXssProtection();
             // Manual Configuration
-            //app.UseXXssProtection(new XXssProtectionOptions(false, false));
+            //app.UseJoonaswXXssProtection(new XXssProtectionOptions(false, false));
 
-            app.UseXContentTypeOptions();
+            app.UseJoonaswXContentTypeOptions();
             // Manual Configuration
-            //app.UseXContentTypeOptions(new XContentTypeOptionsOptions(true));
+            //app.UseJoonaswXContentTypeOptions(new XContentTypeOptionsOptions(true));
 
-            app.UseReferrerPolicy();
+            app.UseJoonaswReferrerPolicy();
             // Manual Configuration
-            //app.UseReferrerPolicy(
+            //app.UseJoonaswReferrerPolicy(
             //    new ReferrerPolicyOptions(ReferrerPolicyOptions.ReferrerPolicyValues.NoReferrerWhenDowngrade));
 
-            app.UseExpectCT();
+            app.UseJoonaswExpectCT();
             // Manual Configuration
-            //app.UseExpectCT(
+            //app.UseJoonaswExpectCT(
             //    new ExpectCTOptions(TimeSpan.FromSeconds(30), "/expect-ct-report", true));
 
-            app.UseFeaturePolicy();
+            app.UseJoonaswFeaturePolicy();
             // Inline configuration
-            //app.UseFeaturePolicy(fp =>
+            //app.UseJoonaswFeaturePolicy(fp =>
             //{
             //    fp.AllowGeolocation
             //        .FromSelf()

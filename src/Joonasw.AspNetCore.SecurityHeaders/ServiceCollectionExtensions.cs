@@ -13,7 +13,7 @@ namespace Joonasw.AspNetCore.SecurityHeaders
         /// <param name="services">The <see cref="IServiceCollection"/></param>
         /// <param name="nonceByteAmount">Length of the nonces to generate in bytes.</param>
         /// <returns>The <see cref="IServiceCollection"/></returns>
-        public static IServiceCollection AddCsp(this IServiceCollection services, int nonceByteAmount = 32)
+        public static IServiceCollection AddJoonaswCsp(this IServiceCollection services, int nonceByteAmount = 32)
         {
             return services.AddScoped<ICspNonceService>(svcProvider => new CspNonceService(nonceByteAmount));
         }
