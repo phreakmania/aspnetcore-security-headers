@@ -1,23 +1,18 @@
-# Add CSP, HSTS or HPKP headers to an ASP.NET Core app
+# Add CSP or HPKP headers to an ASP.NET Core app
 
-This library allows you to add Content Security Policy, Strict Transport Security and Public Key Pin headers via middleware.
+This library allows you to add Content Security Policy and Public Key Pin headers via middleware.
 
 You can get the library from NuGet: [https://www.nuget.org/packages/Joonasw.AspNetCore.SecurityHeaders](https://www.nuget.org/packages/Joonasw.AspNetCore.SecurityHeaders)
 
 ## Example configuration
 
 ```cs
-// Enable Strict Transport Security with a 30-day caching period
-// Do not include subdomains
-// Do not allow preload
-app.UseJoonaswHsts(new HstsOptions(TimeSpan.FromDays(30), includeSubDomains: false, preload: false));
-
 // Use certificate pinning with:
 // - 30-day caching period
 // - One pin in SHA-256 form
 // - Report-Only = Invalid certificate should not be reported, but:
 // - Report problems to /hpkp-report
-app.UseJoonaswHpkp(hpkp =>
+app.UseHpkp(hpkp =>
 {
     hpkp.UseMaxAgeSeconds(30 * 24 * 60 * 60)
         .AddSha256Pin("nrmpk4ZI3wbRBmUZIT5aKAgP0LlKHRgfA2Snjzeg9iY=")
@@ -26,7 +21,7 @@ app.UseJoonaswHpkp(hpkp =>
 });
 
 // Content Security Policy
-app.UseJoonaswCsp(csp =>
+app.UseCsp(csp =>
 {
     // If nothing is mentioned for a resource class, allow from this domain
     csp.ByDefaultAllow
@@ -120,7 +115,7 @@ public void ConfigureServices(IServiceCollection services)
     // ... other service registrations
 
     // Add services necessary for nonces in CSP, 32-byte nonces
-    services.AddJoonaswCsp(nonceByteAmount: 32);
+    services.AddCsp(nonceByteAmount: 32);
 }
 ```
 
