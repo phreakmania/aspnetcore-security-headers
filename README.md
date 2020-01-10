@@ -10,14 +10,14 @@ You can get the library from NuGet: [https://www.nuget.org/packages/Joonasw.AspN
 // Enable Strict Transport Security with a 30-day caching period
 // Do not include subdomains
 // Do not allow preload
-app.UseHsts(new HstsOptions(TimeSpan.FromDays(30), includeSubDomains: false, preload: false));
+app.UseJoonaswHsts(new HstsOptions(TimeSpan.FromDays(30), includeSubDomains: false, preload: false));
 
 // Use certificate pinning with:
 // - 30-day caching period
 // - One pin in SHA-256 form
 // - Report-Only = Invalid certificate should not be reported, but:
 // - Report problems to /hpkp-report
-app.UseHpkp(hpkp =>
+app.UseJoonaswHpkp(hpkp =>
 {
     hpkp.UseMaxAgeSeconds(30 * 24 * 60 * 60)
         .AddSha256Pin("nrmpk4ZI3wbRBmUZIT5aKAgP0LlKHRgfA2Snjzeg9iY=")
@@ -26,7 +26,7 @@ app.UseHpkp(hpkp =>
 });
 
 // Content Security Policy
-app.UseCsp(csp =>
+app.UseJoonaswCsp(csp =>
 {
     // If nothing is mentioned for a resource class, allow from this domain
     csp.ByDefaultAllow
@@ -120,7 +120,7 @@ public void ConfigureServices(IServiceCollection services)
     // ... other service registrations
 
     // Add services necessary for nonces in CSP, 32-byte nonces
-    services.AddCsp(nonceByteAmount: 32);
+    services.AddJoonaswCsp(nonceByteAmount: 32);
 }
 ```
 
