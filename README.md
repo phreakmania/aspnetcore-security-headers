@@ -2,7 +2,7 @@
 
 This library allows you to add Content Security Policy and Public Key Pin headers via middleware.
 
-You can get the library from NuGet: [https://www.nuget.org/packages/Joonasw.AspNetCore.SecurityHeaders](https://www.nuget.org/packages/Joonasw.AspNetCore.SecurityHeaders)
+You can get the library from NuGet: [https://www.nuget.org/packages/pm.Joonasw.AspNetCore.SecurityHeaders](https://www.nuget.org/packages/pm.Joonasw.AspNetCore.SecurityHeaders)
 
 ## Example configuration
 
