@@ -21,7 +21,6 @@ namespace Joonasw.AspNetCore.SecurityHeaders.Samples
         public void ConfigureServices(IServiceCollection services)
         {
             // Setup mapping from config file to configuration
-            services.Configure<HstsOptions>(Configuration.GetSection("Hsts"));
             services.Configure<CspOptions>(Configuration.GetSection("Csp"));
             services.Configure<HpkpOptions>(Configuration.GetSection("Hpkp"));
             services.Configure<FeaturePolicyOptions>(Configuration.GetSection("FeaturePolicy"));
@@ -42,10 +41,6 @@ namespace Joonasw.AspNetCore.SecurityHeaders.Samples
             else
             {
                 app.UseHttpsEnforcement();
-
-                app.UseHsts();
-                // Manual configuration
-                //app.UseHsts(new HstsOptions(TimeSpan.FromDays(30), includeSubDomains: false, preload: false));
 
                 app.UseHpkp();
                 // Manual configuration

@@ -6,7 +6,6 @@ using Joonasw.AspNetCore.SecurityHeaders.FeaturePolicy;
 using Joonasw.AspNetCore.SecurityHeaders.FeaturePolicy.Builder;
 using Joonasw.AspNetCore.SecurityHeaders.Hpkp;
 using Joonasw.AspNetCore.SecurityHeaders.Hpkp.Builder;
-using Joonasw.AspNetCore.SecurityHeaders.Hsts;
 using Joonasw.AspNetCore.SecurityHeaders.ReferrerPolicy;
 using Joonasw.AspNetCore.SecurityHeaders.XContentTypeOptions;
 using Joonasw.AspNetCore.SecurityHeaders.XFrameOptions;
@@ -48,31 +47,6 @@ namespace Joonasw.AspNetCore.SecurityHeaders
         public static IApplicationBuilder UseCsp(this IApplicationBuilder app)
         {
             return app.UseMiddleware<CspMiddleware>();
-        }
-
-        /// <summary>
-        /// Adds a HTTP Strict Transport Security header
-        /// to the response.
-        /// </summary>
-        /// <param name="app">The <see cref="IApplicationBuilder"/></param>
-        /// <param name="options"></param>
-        /// <returns>The <see cref="IApplicationBuilder"/></returns>
-        public static IApplicationBuilder UseHsts(
-            this IApplicationBuilder app,
-            HstsOptions options)
-        {
-            return app.UseMiddleware<HstsMiddleware>(new OptionsWrapper<HstsOptions>(options));
-        }
-
-        /// <summary>
-        /// Adds a HTTP Strict Transport Security header
-        /// to the response.
-        /// </summary>
-        /// <param name="app">The <see cref="IApplicationBuilder"/></param>
-        /// <returns>The <see cref="IApplicationBuilder"/></returns>
-        public static IApplicationBuilder UseHsts(this IApplicationBuilder app)
-        {
-            return app.UseMiddleware<HstsMiddleware>();
         }
 
         /// <summary>

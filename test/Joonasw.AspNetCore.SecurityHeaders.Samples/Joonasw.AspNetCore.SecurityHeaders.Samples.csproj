@@ -2,6 +2,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <UserSecretsId>33ce3d09-4099-4a8e-93af-049b12b6eb90</UserSecretsId>
+    <AssemblyName>pm.Joonasw.AspNetCore.SecurityHeaders.Samples</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Joonasw.AspNetCore.SecurityHeaders\Joonasw.AspNetCore.SecurityHeaders.csproj" />
